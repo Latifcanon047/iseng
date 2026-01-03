@@ -2,7 +2,7 @@
 <html lang="id">
     <head>
     <meta charset="UTF-8">
-    <title>Pesan Rahasia</title>
+    <title>Idiot</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
@@ -21,12 +21,10 @@
         overflow:hidden;
     }
 
-    /* ================= AMPLOP ================= */
     .envelope{
         position: fixed;
         bottom: 50%;
         right: 50%;
-
         width: 300px;
         height: 200px;
 
@@ -36,16 +34,33 @@
         z-index: 1000;
 
         transform: translate(50%, 50%) rotate(90deg);
-        transition: transform 1.1s cubic-bezier(.55, .05, .85, .45);
         transition: bottom 0.9s cubic-bezier(.4,0,.2,1);
+        perspective: 1000px; /* WAJIB */
     }
 
-    .envelope::before{
-        content:"";
+    /* SEGITIGA ATAS */
+    .flap{
         position:absolute;
-        inset:0;
-        clip-path:polygon(0 0,50% 55%,100% 0);
+        top:0;
+        left:0;
+        width:100%;
+        height:55%;
         background:#222;
+        z-index: 100;
+
+        /* segitiga mengarah ke BAWAH */
+        clip-path: polygon(0 0, 50% 100%, 100% 0);
+
+        transform-origin: 50% 0%; /* ENGSEL DI ATAS */
+        transform: rotateX(0deg);
+        transition: transform 0.8s ease-in-out;
+
+        backface-visibility: visible;
+    }
+
+    /* DIBUKA KAYAK BUKU */
+    .envelope.open .flap{
+        transform: rotateX(265deg);
     }
 
     .open-text{
@@ -54,6 +69,8 @@
         width:100%;
         text-align:center;
         font-size:50px;
+        font-weight: 200;
+        font-family: 'Dancing Script', cursive;
         letter-spacing:3px;
         color:#aaa;
         z-index: 1000;
@@ -67,30 +84,36 @@
 
     @keyframes envelopeMove {
     0% {
-        transform: translate(90%, -10%) rotate(90deg) scale(1);
+        transform: translate(50%, 50%) rotate(90deg) scale(1);
+    }
+
+    10% {
+        transform: translate(90%, -30%) rotate(70deg) scale(1);
     }
 
     20% {
-        transform: translateX(60%) rotate(20deg) scale(1);
+        transform: translateX(60%) rotate(10deg) scale(1);
     }
 
     100% {
-        transform: translateX(50%) rotate(0deg) scale(2.5);
+        transform: translateX(50%) rotate(0deg) scale(2);
     }
 }
 
     /* ================= PESAN ================= */
     .message{
-        position:absolute;
-        top:50%;
-        left:175vw; /* START DI LUAR LAYAR KANAN */
-        transform:translateY(250%);
-        font-size:150px;
+        position:fixed;
+        bottom: -150%;
+        right: 50%;
+        transform:translate(50%) rotate(90deg);
+        font-size:300px;
         font-weight:500;
         letter-spacing:3px;
         white-space:nowrap;
-        word-spacing: 600px;
+        word-spacing: 150px;
         opacity:1;
+        transition: bottom 7s linear;
+        z-index: 200;
 
         color:#9ad0ff;
         text-shadow:
@@ -101,17 +124,7 @@
 
     /* ANIMASI SATU KALIMAT */
     .message.animate{
-        animation:
-            sentenceFly 7s linear forwards;
-    }
-
-    @keyframes sentenceFly{
-        0%{
-            transform:translate(0, 250%);
-        }
-        100%{
-            transform:translate(-600vw, 250%);
-        }
+        bottom: 200%;
     }
 
     </style>
@@ -119,6 +132,7 @@
     <body>
 
         <div class="envelope" id="envelope">
+            <div class="flap"></div>
             <div class="open-text">BUKA</div>
         </div>
 
@@ -136,10 +150,13 @@
             played = true;
 
             envelope.classList.add("active");
+            setTimeout(() => {
+                envelope.classList.add("open");
+            }, 800)
 
             setTimeout(() => {
                 message.classList.add("animate");
-            }, 700);
+            }, 900);
         };
         </script>
 
