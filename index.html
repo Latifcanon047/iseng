@@ -29,13 +29,13 @@
         height: 200px;
 
         background: #111;
-        border: 1px solid #666;
+        border: 3px solid #666;
         cursor: pointer;
         z-index: 1000;
 
         transform: translate(50%, 50%) rotate(90deg);
         transition: bottom 0.9s cubic-bezier(.4,0,.2,1);
-        perspective: 1000px; /* WAJIB */
+        perspective: 1000px;
     }
 
     /* SEGITIGA ATAS */
@@ -45,7 +45,7 @@
         left:0;
         width:100%;
         height:55%;
-        background:#222;
+        background:#5e5757;
         z-index: 100;
 
         /* segitiga mengarah ke BAWAH */
@@ -77,7 +77,7 @@
     }
 
     .envelope.active{
-        bottom: 4%;
+        bottom: 2%;
         animation: envelopeMove 1.4s cubic-bezier(.42,0,1,1) forwards;
         
     }
@@ -96,7 +96,7 @@
     }
 
     100% {
-        transform: translateX(50%) rotate(0deg) scale(2);
+        transform: translateX(50%) rotate(0deg) scale(1.5);
     }
 }
 
